@@ -1,4 +1,4 @@
-import { PDFDocument, rgb } from 'pdf-lib';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 const generatePDF = async () => {
   // Create a new PDF document
@@ -36,12 +36,15 @@ const generatePDF = async () => {
   const fontSize = 12;
   const textMargin = 5;
 
+  // Use StandardFonts
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
   for (let rowIndex = 0; rowIndex < numberOfRows; rowIndex++) {
     for (let colIndex = 0; colIndex < numberOfColumns; colIndex++) {
       const cellText = tableData[rowIndex][colIndex];
       const cellX = x + colIndex * cellWidth;
       const cellY = y - (rowIndex + 1) * cellHeight + cellHeight;
-      page.drawText(cellText, { x: cellX + textMargin, y: cellY - textMargin, size: fontSize });
+      page.drawText(cellText, { x: cellX + textMargin, y: cellY - textMargin, size: fontSize, font });
     }
   }
 
